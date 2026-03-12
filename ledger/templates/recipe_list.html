@@ -11,5 +11,10 @@
     {% empty %}
         <li>No recipes found.</li>
     {% endfor %}
+    {% if user.is_authenticated %}
+    <p>
+        <a href="{% url 'recipe_add' %}">+ Add New Recipe</a>
+    </p>
+    {% endif %}
 </ul>
 {% endblock %}
