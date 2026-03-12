@@ -1,19 +1,42 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1>{{ recipe.name }}</h1>
-<p><strong>Author:</strong> {{ recipe.author.user.username }}</p>
-<p><strong>Author Bio:</strong> {{ recipe.author.bio }}</p>
+    <h1>{{ recipe.name }}</h1>
+    <p><strong>Author:</strong> {{ recipe.author.name }}</p>
+    <p><strong>Created:</strong> {{ recipe.created_on }}</p>
 
-<h3>Ingredients:</h3>
-<ul>
-    {% for ri in recipe.ingredients.all %}
-        <li>{{ ri.quantity }} - {{ ri.ingredient.name }}</li>
-    {% empty %}
-        <li>No ingredients added yet!</li>
-    {% endfor %}
-</ul>
+    <h3>Ingredients</h3>
+    <ul>
+        {% for ri in recipe.ingredients.all %}
+            <li>{{ ri.quantity }} of {{ ri.ingredient.name }}</li>
+        {% endfor %}
+    </ul>
 
-<hr>
-<p><small>Created: {{ recipe.created_on }} | Last Updated: {{ recipe.updated_on }}</small></p>
+    <hr>
+
+    <h3>Images</h3>
+    <div class="image-gallery">
+        {% for recipe_image in recipe.images.all %}
+            <div style="margin-bottom: 20px;">
+                <img src="{{ recipe_image.image.url }}" 
+                     alt="{{ recipe_image.description }}" 
+                     style="max-width: 400px; display: block;">
+                <p><em>{{ recipe_image.description }}</em></p>
+            </div>
+        {% empty %}
+            <p>No images available for this recipe.</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    {% if user.is_authenticated %}
+        <p>
+            <a href="{% url 'recipe_add_image' recipe.pk %}">
+                + Upload New Image for this Recipe
+            </a>
+        </p>
+    {% endif %}
+
+    <p><a href="{% url 'recipe_list' %}">Back to List</a></p>
 {% endblock %}
