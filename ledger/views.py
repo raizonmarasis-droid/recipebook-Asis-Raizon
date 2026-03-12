@@ -32,7 +32,7 @@ class RecipeImageCreateView(LoginRequiredMixin, CreateView):
     template_name = 'recipe_image_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('recipe_detail', kwargs={'pk': self.kwargs['pk']}) [cite: 31]
+        return reverse_lazy('recipe_detail', kwargs={'pk': self.kwargs['pk']}) 
 
     def form_valid(self, form):
         form.instance.recipe = get_object_or_404(Recipe, pk=self.kwargs['pk'])
