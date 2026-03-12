@@ -3,7 +3,7 @@
 {% block content %}
 <h2>All Recipes</h2>
 <ul>
-    {% for recipe in recipes %}
+    {% for recipe in recipe_list %}
         <li>
             <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a> 
             by {{ recipe.author.user.username }}
